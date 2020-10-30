@@ -1,6 +1,6 @@
 @component('layouts.app')
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
@@ -13,24 +13,18 @@
                         <p>{{$thread->body}}</p>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="row justify-content-center mt-4">
-            <div class="col-md-8">
-                <div class="card">
-
-                    @foreach ($thread->replies as $reply)
+                @foreach ($replies as $reply)
+                    <div class="card my-2">
                         <x-reply :reply="$reply"></x-reply>
-                    @endforeach
-                </div>
-            </div>
-        </div>
+                    </div>
+                @endforeach
 
-        <div class="row justify-content-center mt-4">
-            @if (auth()->check())
-                <div class="col-md-8">
-                    <form action="{{$thread->path('replies')}}" method="POST">
+                <div>
+                    {{$replies->links()}}
+                </div>
+
+                @if (auth()->check())
+                    <form action="{{$thread->path() . '/replies'}}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="body">Body</label>
@@ -39,10 +33,21 @@
 
                         <button class="btn btn-primary" type="submit">Post</button>
                     </form>
+                @else
+                    <p>Please <a href="{{route('login')}}">sign in</a> to participate in this thread.</p>
+                @endif
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p>
+                            This thread was published {{$thread->created_at->diffForHumans()}} by
+                            <a href="#">{{$thread->creator->name}}</a>, and currently has {{$thread->replies_count}} {{Str::plural('comment', $thread->replies_count)}}
+                        </p>
+                    </div>
                 </div>
-            @else
-                <p>Please <a href="{{route('login')}}">sign in</a> to participate in this thread.</p>
-            @endif
+            </div>
         </div>
     </div>
 @endcomponent
