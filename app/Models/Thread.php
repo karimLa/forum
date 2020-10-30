@@ -31,6 +31,11 @@ class Thread extends Model
         return $this->replies()->create($reply);
     }
 
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
+
     public function path(string $append = '')
     {
         return '/threads/' . $this->channel->slug . '/' . $this->id;

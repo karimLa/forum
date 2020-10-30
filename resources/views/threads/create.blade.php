@@ -9,12 +9,30 @@
                     <form action="{{route('store_thread')}}" method="POST">
                         @csrf
                         <div class="from-group">
+                            <label for="channel_id">Choose a Channel:</label>
+                            <select type="text" class="form-control" name="channel_id" id="channel_id" value="{{old('channel_id')}}" required>
+                                <option>Choose One...</option>
+                                @foreach ($channels as $channel)
+                                    <option value="{{$channel->id}}" {{old('channel_id') == $channel->id ? 'selected' : ''}}>{{$channel->name}}</option>
+                                @endforeach
+                            </select>
+                            @error('channel_id')
+                                <p class="text-danger pt-1">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <div class="from-group  mt-4">
                             <label for="title">Title:</label>
-                            <input type="text" class="form-control" name="title" id="title">
+                            <input type="text" class="form-control" name="title" id="title" value="{{old('title')}}" required>
+                            @error('title')
+                                <p class="text-danger pt-1">{{$message}}</p>
+                            @enderror
                         </div>
                         <div class="from-group mt-4">
                             <label for="body">Body:</label>
-                            <textarea type="text" class="form-control" name="body" id="body" rows="8"></textarea>
+                            <textarea type="text" class="form-control" name="body" id="body" rows="8" value="{{old('body')}}" required></textarea>
+                            @error('body')
+                                <p class="text-danger pt-1">{{$message}}</p>
+                            @enderror
                         </div>
 
                         <button class="mt-4 btn btn-primary" type="submit">Publish</button>
