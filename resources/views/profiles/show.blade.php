@@ -1,19 +1,18 @@
 @component('layouts.app')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="container">
+        <div class="col-md-8 offset-2 mt-5">
+            <div class="page-header">
+                <h1>{{$profileUser->name}} <small>since {{$profileUser->created_at->diffForHumans()}}</small></h1>
+            </div>
+
             @foreach ($threads as $thread)
-                <div class="card mb-4">
+                <div class="card mt-4">
                     <div class="card-header">
                         <div class="row px-3">
                             <h4 class="flex-grow-1">
-                                <a href="{{$thread->path()}}">
-                                    {{$thread->title}}
-                                </a>
+                                <a href="#">{{$profileUser->name}}</a> posted: {{$thread->title}}
                             </h4>
-                            <a href="{{$thread->path()}}">
-                                {{$thread->replies_count}} {{Str::plural('reply', $thread->replies_count)}}
-                            </a>
+                            <span>{{$thread->created_at->diffForHumans()}}</span>
                         </div>
                     </div>
 
@@ -22,7 +21,9 @@
                     </div>
                 </div>
             @endforeach
+
+            {{$threads->links()}}
+
         </div>
     </div>
-</div>
 @endcomponent

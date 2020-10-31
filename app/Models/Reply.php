@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\Favorable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
-    use HasFactory;
+    use HasFactory, Favorable;
 
     protected $guarded = [];
-
+    protected $with = ['owner', 'favorites'];
 
     public function thread()
     {
@@ -20,18 +21,5 @@ class Reply extends Model
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function favorites()
-    {
-        return $this->morphMany(Favorite::class, 'favorited');
-    }
-
-    public function favorite()
-    {
-        $attributes = ['user_id' => auth()->id()];
-        if (!$this->favorites()->where($attributes)->exists()) {
-            return $this->favorites()->create($attributes);
-        }
     }
 }

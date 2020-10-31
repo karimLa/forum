@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>
-                            <a href="#">{{$thread->creator->name}}</a> posted: {{$thread->title}}
+                            <a href="{{route('profile', $thread->creator)}}">{{$thread->creator->name}}</a> posted: {{$thread->title}}
                         </h4>
                     </div>
 
@@ -19,9 +19,7 @@
                     </div>
                 @endforeach
 
-                <div>
-                    {{$replies->links()}}
-                </div>
+                {{$replies->links()}}
 
                 @if (auth()->check())
                     <form action="{{$thread->path() . '/replies'}}" method="POST">

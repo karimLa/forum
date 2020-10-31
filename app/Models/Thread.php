@@ -10,6 +10,7 @@ class Thread extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $with = ['creator', 'channel'];
 
     protected static function boot()
     {

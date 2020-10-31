@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\ThreadController;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,6 @@ Route::get('/threads', [ThreadController::class, 'index'])->name('threads');
 Route::get('/threads/{channel:slug}', [ThreadController::class, 'index']);
 Route::get('/threads/{channel:slug}/{thread}', [ThreadController::class, 'show'])->name('thread');
 
-
+Route::get('/profile/{user:name}', [ProfilesController::class, 'show'])->name('profile');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
