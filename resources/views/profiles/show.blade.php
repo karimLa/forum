@@ -10,7 +10,8 @@
                     <div class="card-header">
                         <div class="row px-3">
                             <h4 class="flex-grow-1">
-                                <a href="#">{{$profileUser->name}}</a> posted: {{$thread->title}}
+                                <a href="{{route('profile', $thread->creator)}}">{{$profileUser->name}}</a> posted:
+                                <a href="{{$thread->path()}}">{{$thread->title}}</a>
                             </h4>
                             <span>{{$thread->created_at->diffForHumans()}}</span>
                         </div>
